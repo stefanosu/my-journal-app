@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API 
   before_action :underscore_params!
-  protect_from_forgery with: :null_session
-  respond_to :jsonfi
+  # protect_from_forgery with: :null_session
+  respond_to :json
 
 
   def underscore_params!
