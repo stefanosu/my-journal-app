@@ -1,9 +1,10 @@
 class ApplicationController < ActionController::API 
+  protect_from_forgery with: :null_session
+  respond_to :json
+  
   before_action :underscore_params!
   before_action :configured_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user 
-  protect_from_forgery with: :null_session
-  respond_to :json
 
 
   def underscore_params!
@@ -28,5 +29,17 @@ class ApplicationController < ActionController::API
         end
       end
     end
+  end
+
+  def authenticate_user!(options = {})
+    head :unauthorized unless signed_in?
+  end
+
+  def current_user 
+    @current_user ||= super || User.find(@current_user_id) 
+  end
+
+  def signed_in? 
+    @current_user_id.present?   
   end
 end 
