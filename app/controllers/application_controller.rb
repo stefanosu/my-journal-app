@@ -1,20 +1,20 @@
 class ApplicationController < ActionController::API 
-  protect_from_forgery with: :null_session
+  # protect_from_forgery with: :null_session
   respond_to :json
   
-  before_action :underscore_params!
+  # before_action :underscore_params!
   before_action :configured_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user 
 
 
-  def underscore_params!
-    params.deep_transform_keys!(&:underscore)
-  end
+  # def underscore_params!
+  #   params.deep_transform_keys!(&:underscore)
+  # end
 
   private 
 
   def configured_permitted_parameters 
-    devise_paramater_sanitizer.for(:sign_up) << :username
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username]) 
   end
 
   def authenticate_user
