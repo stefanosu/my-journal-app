@@ -1,4 +1,4 @@
-class ApplicationController < ActionController::API 
+class ApplicationController < ActionController::Base
   include ActionController::HttpAuthentication::Basic::ControllerMethods
   # protect_from_forgery with: :null_session
   respond_to :json
