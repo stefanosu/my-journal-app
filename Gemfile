@@ -19,6 +19,8 @@ gem 'devise'
 gem 'turbolinks'
 gem 'coffee-rails'
 
+gem 'jwt'
+
 gem 'acts-as-taggable-on'
 gem 'acts_as_follower'
 
