@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  include ActionController::HttpAuthentication::Basic::ControllerMethods
   # protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token
   respond_to :json
@@ -17,6 +16,7 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:username]) 
+    
   end
 
   def authenticate_user 
@@ -24,8 +24,9 @@ class ApplicationController < ActionController::Base
       authenticate_or_request_with_http_token do |token| 
         begin
           jwt_payload = JWT.decode(token, Rails.application.secrets.secret_key_base).first
+
           @current_user_id = jwt_payload['id']
-          byebug
+          # byebug
         rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
           head :unauthorized
         end
